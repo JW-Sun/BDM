@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jw.bigwhalemonitor.mapper.CmdRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.jw.bigwhalemonitor.entity.CmdRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="agent_id" property="agentId" jdbcType="VARCHAR" />
+    <result column="agent_instance" property="agentInstance" jdbcType="VARCHAR" />
+    <result column="script_id" property="scriptId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="timeout" property="timeout" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="cluster_id" property="clusterId" jdbcType="VARCHAR" />
+    <result column="scheduling_id" property="schedulingId" jdbcType="VARCHAR" />
+    <result column="scheduling_instance_id" property="schedulingInstanceId" jdbcType="VARCHAR" />
+    <result column="scheduling_node_id" property="schedulingNodeId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
+    <result column="job_id" property="jobId" jdbcType="VARCHAR" />
+    <result column="job_final_status" property="jobFinalStatus" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jw.bigwhalemonitor.entity.CmdRecordWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="args" property="args" jdbcType="LONGVARCHAR" />
+    <result column="outputs" property="outputs" jdbcType="LONGVARCHAR" />
+    <result column="errors" property="errors" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, parent_id, agent_id, agent_instance, script_id, status, timeout, uid, cluster_id, 
+    scheduling_id, scheduling_instance_id, scheduling_node_id, create_time, start_time, 
+    finish_time, job_id, job_final_status, url
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, args, outputs, errors
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmd_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cmd_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmd_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cmd_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordExample" >
+    delete from cmd_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordWithBLOBs" >
+    insert into cmd_record (id, parent_id, agent_id, 
+      agent_instance, script_id, status, 
+      timeout, uid, cluster_id, 
+      scheduling_id, scheduling_instance_id, scheduling_node_id, 
+      create_time, start_time, finish_time, 
+      job_id, job_final_status, url, 
+      content, args, outputs, 
+      errors)
+    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{agentId,jdbcType=VARCHAR}, 
+      #{agentInstance,jdbcType=VARCHAR}, #{scriptId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{timeout,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{clusterId,jdbcType=VARCHAR}, 
+      #{schedulingId,jdbcType=VARCHAR}, #{schedulingInstanceId,jdbcType=VARCHAR}, #{schedulingNodeId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}, 
+      #{jobId,jdbcType=VARCHAR}, #{jobFinalStatus,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR}, #{args,jdbcType=LONGVARCHAR}, #{outputs,jdbcType=LONGVARCHAR}, 
+      #{errors,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordWithBLOBs" >
+    insert into cmd_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="agentId != null" >
+        agent_id,
+      </if>
+      <if test="agentInstance != null" >
+        agent_instance,
+      </if>
+      <if test="scriptId != null" >
+        script_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="timeout != null" >
+        timeout,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="clusterId != null" >
+        cluster_id,
+      </if>
+      <if test="schedulingId != null" >
+        scheduling_id,
+      </if>
+      <if test="schedulingInstanceId != null" >
+        scheduling_instance_id,
+      </if>
+      <if test="schedulingNodeId != null" >
+        scheduling_node_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="finishTime != null" >
+        finish_time,
+      </if>
+      <if test="jobId != null" >
+        job_id,
+      </if>
+      <if test="jobFinalStatus != null" >
+        job_final_status,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="args != null" >
+        args,
+      </if>
+      <if test="outputs != null" >
+        outputs,
+      </if>
+      <if test="errors != null" >
+        errors,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null" >
+        #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentInstance != null" >
+        #{agentInstance,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptId != null" >
+        #{scriptId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="timeout != null" >
+        #{timeout,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        #{clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingId != null" >
+        #{schedulingId,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingInstanceId != null" >
+        #{schedulingInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingNodeId != null" >
+        #{schedulingNodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobId != null" >
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFinalStatus != null" >
+        #{jobFinalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="args != null" >
+        #{args,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="outputs != null" >
+        #{outputs,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="errors != null" >
+        #{errors,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordExample" resultType="java.lang.Integer" >
+    select count(*) from cmd_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cmd_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentId != null" >
+        agent_id = #{record.agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentInstance != null" >
+        agent_instance = #{record.agentInstance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scriptId != null" >
+        script_id = #{record.scriptId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeout != null" >
+        timeout = #{record.timeout,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clusterId != null" >
+        cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schedulingId != null" >
+        scheduling_id = #{record.schedulingId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schedulingInstanceId != null" >
+        scheduling_instance_id = #{record.schedulingInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schedulingNodeId != null" >
+        scheduling_node_id = #{record.schedulingNodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finishTime != null" >
+        finish_time = #{record.finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jobId != null" >
+        job_id = #{record.jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFinalStatus != null" >
+        job_final_status = #{record.jobFinalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.args != null" >
+        args = #{record.args,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.outputs != null" >
+        outputs = #{record.outputs,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.errors != null" >
+        errors = #{record.errors,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update cmd_record
+    set id = #{record.id,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      agent_id = #{record.agentId,jdbcType=VARCHAR},
+      agent_instance = #{record.agentInstance,jdbcType=VARCHAR},
+      script_id = #{record.scriptId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      timeout = #{record.timeout,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      scheduling_id = #{record.schedulingId,jdbcType=VARCHAR},
+      scheduling_instance_id = #{record.schedulingInstanceId,jdbcType=VARCHAR},
+      scheduling_node_id = #{record.schedulingNodeId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      finish_time = #{record.finishTime,jdbcType=TIMESTAMP},
+      job_id = #{record.jobId,jdbcType=VARCHAR},
+      job_final_status = #{record.jobFinalStatus,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      args = #{record.args,jdbcType=LONGVARCHAR},
+      outputs = #{record.outputs,jdbcType=LONGVARCHAR},
+      errors = #{record.errors,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cmd_record
+    set id = #{record.id,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      agent_id = #{record.agentId,jdbcType=VARCHAR},
+      agent_instance = #{record.agentInstance,jdbcType=VARCHAR},
+      script_id = #{record.scriptId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      timeout = #{record.timeout,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      scheduling_id = #{record.schedulingId,jdbcType=VARCHAR},
+      scheduling_instance_id = #{record.schedulingInstanceId,jdbcType=VARCHAR},
+      scheduling_node_id = #{record.schedulingNodeId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      finish_time = #{record.finishTime,jdbcType=TIMESTAMP},
+      job_id = #{record.jobId,jdbcType=VARCHAR},
+      job_final_status = #{record.jobFinalStatus,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordWithBLOBs" >
+    update cmd_record
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null" >
+        agent_id = #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentInstance != null" >
+        agent_instance = #{agentInstance,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptId != null" >
+        script_id = #{scriptId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="timeout != null" >
+        timeout = #{timeout,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        cluster_id = #{clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingId != null" >
+        scheduling_id = #{schedulingId,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingInstanceId != null" >
+        scheduling_instance_id = #{schedulingInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="schedulingNodeId != null" >
+        scheduling_node_id = #{schedulingNodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobId != null" >
+        job_id = #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFinalStatus != null" >
+        job_final_status = #{jobFinalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="args != null" >
+        args = #{args,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="outputs != null" >
+        outputs = #{outputs,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="errors != null" >
+        errors = #{errors,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jw.bigwhalemonitor.entity.CmdRecordWithBLOBs" >
+    update cmd_record
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=VARCHAR},
+      agent_instance = #{agentInstance,jdbcType=VARCHAR},
+      script_id = #{scriptId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      timeout = #{timeout,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      cluster_id = #{clusterId,jdbcType=VARCHAR},
+      scheduling_id = #{schedulingId,jdbcType=VARCHAR},
+      scheduling_instance_id = #{schedulingInstanceId,jdbcType=VARCHAR},
+      scheduling_node_id = #{schedulingNodeId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      job_id = #{jobId,jdbcType=VARCHAR},
+      job_final_status = #{jobFinalStatus,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      args = #{args,jdbcType=LONGVARCHAR},
+      outputs = #{outputs,jdbcType=LONGVARCHAR},
+      errors = #{errors,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jw.bigwhalemonitor.entity.CmdRecord" >
+    update cmd_record
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=VARCHAR},
+      agent_instance = #{agentInstance,jdbcType=VARCHAR},
+      script_id = #{scriptId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      timeout = #{timeout,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      cluster_id = #{clusterId,jdbcType=VARCHAR},
+      scheduling_id = #{schedulingId,jdbcType=VARCHAR},
+      scheduling_instance_id = #{schedulingInstanceId,jdbcType=VARCHAR},
+      scheduling_node_id = #{schedulingNodeId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      job_id = #{jobId,jdbcType=VARCHAR},
+      job_final_status = #{jobFinalStatus,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

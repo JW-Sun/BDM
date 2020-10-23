@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jw.bigwhalemonitor.mapper.YarnAppMapper" >
+  <resultMap id="BaseResultMap" type="com.jw.bigwhalemonitor.entity.YarnApp" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="queue" property="queue" jdbcType="VARCHAR" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="final_status" property="finalStatus" jdbcType="VARCHAR" />
+    <result column="tracking_url" property="trackingUrl" jdbcType="VARCHAR" />
+    <result column="application_type" property="applicationType" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="script_id" property="scriptId" jdbcType="VARCHAR" />
+    <result column="cluster_id" property="clusterId" jdbcType="VARCHAR" />
+    <result column="started_time" property="startedTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, app_id, name, queue, user, state, final_status, tracking_url, application_type, 
+    uid, script_id, cluster_id, started_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jw.bigwhalemonitor.entity.YarnAppExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yarn_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from yarn_app
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from yarn_app
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jw.bigwhalemonitor.entity.YarnAppExample" >
+    delete from yarn_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jw.bigwhalemonitor.entity.YarnApp" >
+    insert into yarn_app (id, app_id, name, 
+      queue, user, state, 
+      final_status, tracking_url, application_type, 
+      uid, script_id, cluster_id, 
+      started_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{queue,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{finalStatus,jdbcType=VARCHAR}, #{trackingUrl,jdbcType=VARCHAR}, #{applicationType,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=VARCHAR}, #{scriptId,jdbcType=VARCHAR}, #{clusterId,jdbcType=VARCHAR}, 
+      #{startedTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jw.bigwhalemonitor.entity.YarnApp" >
+    insert into yarn_app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="queue != null" >
+        queue,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="finalStatus != null" >
+        final_status,
+      </if>
+      <if test="trackingUrl != null" >
+        tracking_url,
+      </if>
+      <if test="applicationType != null" >
+        application_type,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="scriptId != null" >
+        script_id,
+      </if>
+      <if test="clusterId != null" >
+        cluster_id,
+      </if>
+      <if test="startedTime != null" >
+        started_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="queue != null" >
+        #{queue,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="finalStatus != null" >
+        #{finalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingUrl != null" >
+        #{trackingUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationType != null" >
+        #{applicationType,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptId != null" >
+        #{scriptId,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        #{clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="startedTime != null" >
+        #{startedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jw.bigwhalemonitor.entity.YarnAppExample" resultType="java.lang.Integer" >
+    select count(*) from yarn_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update yarn_app
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appId != null" >
+        app_id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queue != null" >
+        queue = #{record.queue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user != null" >
+        user = #{record.user,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finalStatus != null" >
+        final_status = #{record.finalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trackingUrl != null" >
+        tracking_url = #{record.trackingUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationType != null" >
+        application_type = #{record.applicationType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scriptId != null" >
+        script_id = #{record.scriptId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clusterId != null" >
+        cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startedTime != null" >
+        started_time = #{record.startedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update yarn_app
+    set id = #{record.id,jdbcType=VARCHAR},
+      app_id = #{record.appId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      queue = #{record.queue,jdbcType=VARCHAR},
+      user = #{record.user,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      final_status = #{record.finalStatus,jdbcType=VARCHAR},
+      tracking_url = #{record.trackingUrl,jdbcType=VARCHAR},
+      application_type = #{record.applicationType,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      script_id = #{record.scriptId,jdbcType=VARCHAR},
+      cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      started_time = #{record.startedTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jw.bigwhalemonitor.entity.YarnApp" >
+    update yarn_app
+    <set >
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="queue != null" >
+        queue = #{queue,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null" >
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="finalStatus != null" >
+        final_status = #{finalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingUrl != null" >
+        tracking_url = #{trackingUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationType != null" >
+        application_type = #{applicationType,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptId != null" >
+        script_id = #{scriptId,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        cluster_id = #{clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="startedTime != null" >
+        started_time = #{startedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jw.bigwhalemonitor.entity.YarnApp" >
+    update yarn_app
+    set app_id = #{appId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      queue = #{queue,jdbcType=VARCHAR},
+      user = #{user,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      final_status = #{finalStatus,jdbcType=VARCHAR},
+      tracking_url = #{trackingUrl,jdbcType=VARCHAR},
+      application_type = #{applicationType,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      script_id = #{scriptId,jdbcType=VARCHAR},
+      cluster_id = #{clusterId,jdbcType=VARCHAR},
+      started_time = #{startedTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

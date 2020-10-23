@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jw.bigwhalemonitor.mapper.SchedulingMapper" >
+  <resultMap id="BaseResultMap" type="com.jw.bigwhalemonitor.entity.Scheduling" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="script_ids" property="scriptIds" jdbcType="VARCHAR" />
+    <result column="cycle" property="cycle" jdbcType="INTEGER" />
+    <result column="intervals" property="intervals" jdbcType="INTEGER" />
+    <result column="minute" property="minute" jdbcType="INTEGER" />
+    <result column="hour" property="hour" jdbcType="INTEGER" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="cron" property="cron" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="repeat_submit" property="repeatSubmit" jdbcType="BIT" />
+    <result column="ex_restart" property="exRestart" jdbcType="BIT" />
+    <result column="waiting_batches" property="waitingBatches" jdbcType="INTEGER" />
+    <result column="blocking_restart" property="blockingRestart" jdbcType="BIT" />
+    <result column="last_execute_time" property="lastExecuteTime" jdbcType="TIMESTAMP" />
+    <result column="send_email" property="sendEmail" jdbcType="BIT" />
+    <result column="dingding_hooks" property="dingdingHooks" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jw.bigwhalemonitor.entity.Scheduling" extends="BaseResultMap" >
+    <result column="topology" property="topology" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, type, script_ids, cycle, intervals, minute, hour, week, cron, start_time, 
+    end_time, repeat_submit, ex_restart, waiting_batches, blocking_restart, last_execute_time, 
+    send_email, dingding_hooks, create_time, update_time, enabled
+  </sql>
+  <sql id="Blob_Column_List" >
+    topology
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jw.bigwhalemonitor.entity.SchedulingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jw.bigwhalemonitor.entity.SchedulingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scheduling
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from scheduling
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jw.bigwhalemonitor.entity.SchedulingExample" >
+    delete from scheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jw.bigwhalemonitor.entity.Scheduling" >
+    insert into scheduling (id, uid, type, 
+      script_ids, cycle, intervals, 
+      minute, hour, week, 
+      cron, start_time, end_time, 
+      repeat_submit, ex_restart, waiting_batches, 
+      blocking_restart, last_execute_time, send_email, 
+      dingding_hooks, create_time, update_time, 
+      enabled, topology)
+    values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{scriptIds,jdbcType=VARCHAR}, #{cycle,jdbcType=INTEGER}, #{intervals,jdbcType=INTEGER}, 
+      #{minute,jdbcType=INTEGER}, #{hour,jdbcType=INTEGER}, #{week,jdbcType=VARCHAR}, 
+      #{cron,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{repeatSubmit,jdbcType=BIT}, #{exRestart,jdbcType=BIT}, #{waitingBatches,jdbcType=INTEGER}, 
+      #{blockingRestart,jdbcType=BIT}, #{lastExecuteTime,jdbcType=TIMESTAMP}, #{sendEmail,jdbcType=BIT}, 
+      #{dingdingHooks,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{enabled,jdbcType=BIT}, #{topology,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jw.bigwhalemonitor.entity.Scheduling" >
+    insert into scheduling
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="scriptIds != null" >
+        script_ids,
+      </if>
+      <if test="cycle != null" >
+        cycle,
+      </if>
+      <if test="intervals != null" >
+        intervals,
+      </if>
+      <if test="minute != null" >
+        minute,
+      </if>
+      <if test="hour != null" >
+        hour,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+      <if test="cron != null" >
+        cron,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="repeatSubmit != null" >
+        repeat_submit,
+      </if>
+      <if test="exRestart != null" >
+        ex_restart,
+      </if>
+      <if test="waitingBatches != null" >
+        waiting_batches,
+      </if>
+      <if test="blockingRestart != null" >
+        blocking_restart,
+      </if>
+      <if test="lastExecuteTime != null" >
+        last_execute_time,
+      </if>
+      <if test="sendEmail != null" >
+        send_email,
+      </if>
+      <if test="dingdingHooks != null" >
+        dingding_hooks,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="topology != null" >
+        topology,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="scriptIds != null" >
+        #{scriptIds,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="intervals != null" >
+        #{intervals,jdbcType=INTEGER},
+      </if>
+      <if test="minute != null" >
+        #{minute,jdbcType=INTEGER},
+      </if>
+      <if test="hour != null" >
+        #{hour,jdbcType=INTEGER},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null" >
+        #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repeatSubmit != null" >
+        #{repeatSubmit,jdbcType=BIT},
+      </if>
+      <if test="exRestart != null" >
+        #{exRestart,jdbcType=BIT},
+      </if>
+      <if test="waitingBatches != null" >
+        #{waitingBatches,jdbcType=INTEGER},
+      </if>
+      <if test="blockingRestart != null" >
+        #{blockingRestart,jdbcType=BIT},
+      </if>
+      <if test="lastExecuteTime != null" >
+        #{lastExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendEmail != null" >
+        #{sendEmail,jdbcType=BIT},
+      </if>
+      <if test="dingdingHooks != null" >
+        #{dingdingHooks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="topology != null" >
+        #{topology,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jw.bigwhalemonitor.entity.SchedulingExample" resultType="java.lang.Integer" >
+    select count(*) from scheduling
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update scheduling
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.scriptIds != null" >
+        script_ids = #{record.scriptIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycle != null" >
+        cycle = #{record.cycle,jdbcType=INTEGER},
+      </if>
+      <if test="record.intervals != null" >
+        intervals = #{record.intervals,jdbcType=INTEGER},
+      </if>
+      <if test="record.minute != null" >
+        minute = #{record.minute,jdbcType=INTEGER},
+      </if>
+      <if test="record.hour != null" >
+        hour = #{record.hour,jdbcType=INTEGER},
+      </if>
+      <if test="record.week != null" >
+        week = #{record.week,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cron != null" >
+        cron = #{record.cron,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.repeatSubmit != null" >
+        repeat_submit = #{record.repeatSubmit,jdbcType=BIT},
+      </if>
+      <if test="record.exRestart != null" >
+        ex_restart = #{record.exRestart,jdbcType=BIT},
+      </if>
+      <if test="record.waitingBatches != null" >
+        waiting_batches = #{record.waitingBatches,jdbcType=INTEGER},
+      </if>
+      <if test="record.blockingRestart != null" >
+        blocking_restart = #{record.blockingRestart,jdbcType=BIT},
+      </if>
+      <if test="record.lastExecuteTime != null" >
+        last_execute_time = #{record.lastExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendEmail != null" >
+        send_email = #{record.sendEmail,jdbcType=BIT},
+      </if>
+      <if test="record.dingdingHooks != null" >
+        dingding_hooks = #{record.dingdingHooks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enabled != null" >
+        enabled = #{record.enabled,jdbcType=BIT},
+      </if>
+      <if test="record.topology != null" >
+        topology = #{record.topology,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update scheduling
+    set id = #{record.id,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      script_ids = #{record.scriptIds,jdbcType=VARCHAR},
+      cycle = #{record.cycle,jdbcType=INTEGER},
+      intervals = #{record.intervals,jdbcType=INTEGER},
+      minute = #{record.minute,jdbcType=INTEGER},
+      hour = #{record.hour,jdbcType=INTEGER},
+      week = #{record.week,jdbcType=VARCHAR},
+      cron = #{record.cron,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      repeat_submit = #{record.repeatSubmit,jdbcType=BIT},
+      ex_restart = #{record.exRestart,jdbcType=BIT},
+      waiting_batches = #{record.waitingBatches,jdbcType=INTEGER},
+      blocking_restart = #{record.blockingRestart,jdbcType=BIT},
+      last_execute_time = #{record.lastExecuteTime,jdbcType=TIMESTAMP},
+      send_email = #{record.sendEmail,jdbcType=BIT},
+      dingding_hooks = #{record.dingdingHooks,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      enabled = #{record.enabled,jdbcType=BIT},
+      topology = #{record.topology,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update scheduling
+    set id = #{record.id,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      script_ids = #{record.scriptIds,jdbcType=VARCHAR},
+      cycle = #{record.cycle,jdbcType=INTEGER},
+      intervals = #{record.intervals,jdbcType=INTEGER},
+      minute = #{record.minute,jdbcType=INTEGER},
+      hour = #{record.hour,jdbcType=INTEGER},
+      week = #{record.week,jdbcType=VARCHAR},
+      cron = #{record.cron,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      repeat_submit = #{record.repeatSubmit,jdbcType=BIT},
+      ex_restart = #{record.exRestart,jdbcType=BIT},
+      waiting_batches = #{record.waitingBatches,jdbcType=INTEGER},
+      blocking_restart = #{record.blockingRestart,jdbcType=BIT},
+      last_execute_time = #{record.lastExecuteTime,jdbcType=TIMESTAMP},
+      send_email = #{record.sendEmail,jdbcType=BIT},
+      dingding_hooks = #{record.dingdingHooks,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      enabled = #{record.enabled,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jw.bigwhalemonitor.entity.Scheduling" >
+    update scheduling
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="scriptIds != null" >
+        script_ids = #{scriptIds,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        cycle = #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="intervals != null" >
+        intervals = #{intervals,jdbcType=INTEGER},
+      </if>
+      <if test="minute != null" >
+        minute = #{minute,jdbcType=INTEGER},
+      </if>
+      <if test="hour != null" >
+        hour = #{hour,jdbcType=INTEGER},
+      </if>
+      <if test="week != null" >
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null" >
+        cron = #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repeatSubmit != null" >
+        repeat_submit = #{repeatSubmit,jdbcType=BIT},
+      </if>
+      <if test="exRestart != null" >
+        ex_restart = #{exRestart,jdbcType=BIT},
+      </if>
+      <if test="waitingBatches != null" >
+        waiting_batches = #{waitingBatches,jdbcType=INTEGER},
+      </if>
+      <if test="blockingRestart != null" >
+        blocking_restart = #{blockingRestart,jdbcType=BIT},
+      </if>
+      <if test="lastExecuteTime != null" >
+        last_execute_time = #{lastExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendEmail != null" >
+        send_email = #{sendEmail,jdbcType=BIT},
+      </if>
+      <if test="dingdingHooks != null" >
+        dingding_hooks = #{dingdingHooks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="topology != null" >
+        topology = #{topology,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jw.bigwhalemonitor.entity.Scheduling" >
+    update scheduling
+    set uid = #{uid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      script_ids = #{scriptIds,jdbcType=VARCHAR},
+      cycle = #{cycle,jdbcType=INTEGER},
+      intervals = #{intervals,jdbcType=INTEGER},
+      minute = #{minute,jdbcType=INTEGER},
+      hour = #{hour,jdbcType=INTEGER},
+      week = #{week,jdbcType=VARCHAR},
+      cron = #{cron,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      repeat_submit = #{repeatSubmit,jdbcType=BIT},
+      ex_restart = #{exRestart,jdbcType=BIT},
+      waiting_batches = #{waitingBatches,jdbcType=INTEGER},
+      blocking_restart = #{blockingRestart,jdbcType=BIT},
+      last_execute_time = #{lastExecuteTime,jdbcType=TIMESTAMP},
+      send_email = #{sendEmail,jdbcType=BIT},
+      dingding_hooks = #{dingdingHooks,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      enabled = #{enabled,jdbcType=BIT},
+      topology = #{topology,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jw.bigwhalemonitor.entity.Scheduling" >
+    update scheduling
+    set uid = #{uid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      script_ids = #{scriptIds,jdbcType=VARCHAR},
+      cycle = #{cycle,jdbcType=INTEGER},
+      intervals = #{intervals,jdbcType=INTEGER},
+      minute = #{minute,jdbcType=INTEGER},
+      hour = #{hour,jdbcType=INTEGER},
+      week = #{week,jdbcType=VARCHAR},
+      cron = #{cron,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      repeat_submit = #{repeatSubmit,jdbcType=BIT},
+      ex_restart = #{exRestart,jdbcType=BIT},
+      waiting_batches = #{waitingBatches,jdbcType=INTEGER},
+      blocking_restart = #{blockingRestart,jdbcType=BIT},
+      last_execute_time = #{lastExecuteTime,jdbcType=TIMESTAMP},
+      send_email = #{sendEmail,jdbcType=BIT},
+      dingding_hooks = #{dingdingHooks,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      enabled = #{enabled,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

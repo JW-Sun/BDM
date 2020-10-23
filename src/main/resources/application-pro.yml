@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bigwhale?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+    username: root
+    password:
+    tomcat:
+      test-on-borrow: true
+      test-while-idle: true
+      time-between-eviction-runs-millis: 3600000
+      validation-query: select 1
+  thymeleaf:
+    cache: true
+  mail:
+    host: smtp.mxhichina.com
+    port: 80
+    username: username@bigwhale.com
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
+  quartz:
+    job-store-type: jdbc
+
+logging:
+  level:
+    root: INFO
+
+mybatis:
+  mapper-locations: classpath:mybatis/*Mapper.xml
+  type-aliases-package: com.jw.bigwhalemonitor.entity
+
+# 分页
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jw.bigwhalemonitor.mapper.ScriptMapper" >
+  <resultMap id="BaseResultMap" type="com.jw.bigwhalemonitor.entity.Script" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="timeout" property="timeout" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="cluster_id" property="clusterId" jdbcType="VARCHAR" />
+    <result column="agent_id" property="agentId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="input" property="input" jdbcType="VARCHAR" />
+    <result column="output" property="output" jdbcType="VARCHAR" />
+    <result column="queue" property="queue" jdbcType="VARCHAR" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="app" property="app" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jw.bigwhalemonitor.entity.Script" extends="BaseResultMap" >
+    <result column="script" property="script" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, type, name, description, timeout, uid, cluster_id, agent_id, create_time, update_time, 
+    input, output, queue, user, app
+  </sql>
+  <sql id="Blob_Column_List" >
+    script
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jw.bigwhalemonitor.entity.ScriptExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from script
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jw.bigwhalemonitor.entity.ScriptExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from script
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from script
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from script
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jw.bigwhalemonitor.entity.ScriptExample" >
+    delete from script
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jw.bigwhalemonitor.entity.Script" >
+    insert into script (id, type, name, 
+      description, timeout, uid, 
+      cluster_id, agent_id, create_time, 
+      update_time, input, output, 
+      queue, user, app, script
+      )
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{timeout,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
+      #{clusterId,jdbcType=VARCHAR}, #{agentId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{input,jdbcType=VARCHAR}, #{output,jdbcType=VARCHAR}, 
+      #{queue,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, #{app,jdbcType=VARCHAR}, #{script,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jw.bigwhalemonitor.entity.Script" >
+    insert into script
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="timeout != null" >
+        timeout,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="clusterId != null" >
+        cluster_id,
+      </if>
+      <if test="agentId != null" >
+        agent_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="input != null" >
+        input,
+      </if>
+      <if test="output != null" >
+        output,
+      </if>
+      <if test="queue != null" >
+        queue,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="app != null" >
+        app,
+      </if>
+      <if test="script != null" >
+        script,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="timeout != null" >
+        #{timeout,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        #{clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null" >
+        #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="input != null" >
+        #{input,jdbcType=VARCHAR},
+      </if>
+      <if test="output != null" >
+        #{output,jdbcType=VARCHAR},
+      </if>
+      <if test="queue != null" >
+        #{queue,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="app != null" >
+        #{app,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null" >
+        #{script,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jw.bigwhalemonitor.entity.ScriptExample" resultType="java.lang.Integer" >
+    select count(*) from script
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update script
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeout != null" >
+        timeout = #{record.timeout,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clusterId != null" >
+        cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentId != null" >
+        agent_id = #{record.agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.input != null" >
+        input = #{record.input,jdbcType=VARCHAR},
+      </if>
+      <if test="record.output != null" >
+        output = #{record.output,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queue != null" >
+        queue = #{record.queue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user != null" >
+        user = #{record.user,jdbcType=VARCHAR},
+      </if>
+      <if test="record.app != null" >
+        app = #{record.app,jdbcType=VARCHAR},
+      </if>
+      <if test="record.script != null" >
+        script = #{record.script,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update script
+    set id = #{record.id,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      timeout = #{record.timeout,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      agent_id = #{record.agentId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      input = #{record.input,jdbcType=VARCHAR},
+      output = #{record.output,jdbcType=VARCHAR},
+      queue = #{record.queue,jdbcType=VARCHAR},
+      user = #{record.user,jdbcType=VARCHAR},
+      app = #{record.app,jdbcType=VARCHAR},
+      script = #{record.script,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update script
+    set id = #{record.id,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      timeout = #{record.timeout,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      cluster_id = #{record.clusterId,jdbcType=VARCHAR},
+      agent_id = #{record.agentId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      input = #{record.input,jdbcType=VARCHAR},
+      output = #{record.output,jdbcType=VARCHAR},
+      queue = #{record.queue,jdbcType=VARCHAR},
+      user = #{record.user,jdbcType=VARCHAR},
+      app = #{record.app,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jw.bigwhalemonitor.entity.Script" >
+    update script
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="timeout != null" >
+        timeout = #{timeout,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        cluster_id = #{clusterId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null" >
+        agent_id = #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="input != null" >
+        input = #{input,jdbcType=VARCHAR},
+      </if>
+      <if test="output != null" >
+        output = #{output,jdbcType=VARCHAR},
+      </if>
+      <if test="queue != null" >
+        queue = #{queue,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null" >
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="app != null" >
+        app = #{app,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null" >
+        script = #{script,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jw.bigwhalemonitor.entity.Script" >
+    update script
+    set type = #{type,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      timeout = #{timeout,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      cluster_id = #{clusterId,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      input = #{input,jdbcType=VARCHAR},
+      output = #{output,jdbcType=VARCHAR},
+      queue = #{queue,jdbcType=VARCHAR},
+      user = #{user,jdbcType=VARCHAR},
+      app = #{app,jdbcType=VARCHAR},
+      script = #{script,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jw.bigwhalemonitor.entity.Script" >
+    update script
+    set type = #{type,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      timeout = #{timeout,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      cluster_id = #{clusterId,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      input = #{input,jdbcType=VARCHAR},
+      output = #{output,jdbcType=VARCHAR},
+      queue = #{queue,jdbcType=VARCHAR},
+      user = #{user,jdbcType=VARCHAR},
+      app = #{app,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

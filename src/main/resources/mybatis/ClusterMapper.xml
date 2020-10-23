@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jw.bigwhalemonitor.mapper.ClusterMapper" >
+  <resultMap id="BaseResultMap" type="com.jw.bigwhalemonitor.entity.Cluster" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="yarn_url" property="yarnUrl" jdbcType="VARCHAR" />
+    <result column="default_file_cluster" property="defaultFileCluster" jdbcType="BIT" />
+    <result column="flink_proxy_user_enabled" property="flinkProxyUserEnabled" jdbcType="BIT" />
+    <result column="fs_default_fs" property="fsDefaultFs" jdbcType="VARCHAR" />
+    <result column="fs_webhdfs" property="fsWebhdfs" jdbcType="VARCHAR" />
+    <result column="fs_user" property="fsUser" jdbcType="VARCHAR" />
+    <result column="fs_dir" property="fsDir" jdbcType="VARCHAR" />
+    <result column="streaming_black_node_list" property="streamingBlackNodeList" jdbcType="VARCHAR" />
+    <result column="batch_black_node_list" property="batchBlackNodeList" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, yarn_url, default_file_cluster, flink_proxy_user_enabled, fs_default_fs, 
+    fs_webhdfs, fs_user, fs_dir, streaming_black_node_list, batch_black_node_list
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jw.bigwhalemonitor.entity.ClusterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cluster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cluster
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cluster
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jw.bigwhalemonitor.entity.ClusterExample" >
+    delete from cluster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jw.bigwhalemonitor.entity.Cluster" >
+    insert into cluster (id, name, yarn_url, 
+      default_file_cluster, flink_proxy_user_enabled, fs_default_fs, 
+      fs_webhdfs, fs_user, fs_dir, 
+      streaming_black_node_list, batch_black_node_list
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{yarnUrl,jdbcType=VARCHAR}, 
+      #{defaultFileCluster,jdbcType=BIT}, #{flinkProxyUserEnabled,jdbcType=BIT}, #{fsDefaultFs,jdbcType=VARCHAR}, 
+      #{fsWebhdfs,jdbcType=VARCHAR}, #{fsUser,jdbcType=VARCHAR}, #{fsDir,jdbcType=VARCHAR}, 
+      #{streamingBlackNodeList,jdbcType=VARCHAR}, #{batchBlackNodeList,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jw.bigwhalemonitor.entity.Cluster" >
+    insert into cluster
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="yarnUrl != null" >
+        yarn_url,
+      </if>
+      <if test="defaultFileCluster != null" >
+        default_file_cluster,
+      </if>
+      <if test="flinkProxyUserEnabled != null" >
+        flink_proxy_user_enabled,
+      </if>
+      <if test="fsDefaultFs != null" >
+        fs_default_fs,
+      </if>
+      <if test="fsWebhdfs != null" >
+        fs_webhdfs,
+      </if>
+      <if test="fsUser != null" >
+        fs_user,
+      </if>
+      <if test="fsDir != null" >
+        fs_dir,
+      </if>
+      <if test="streamingBlackNodeList != null" >
+        streaming_black_node_list,
+      </if>
+      <if test="batchBlackNodeList != null" >
+        batch_black_node_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="yarnUrl != null" >
+        #{yarnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFileCluster != null" >
+        #{defaultFileCluster,jdbcType=BIT},
+      </if>
+      <if test="flinkProxyUserEnabled != null" >
+        #{flinkProxyUserEnabled,jdbcType=BIT},
+      </if>
+      <if test="fsDefaultFs != null" >
+        #{fsDefaultFs,jdbcType=VARCHAR},
+      </if>
+      <if test="fsWebhdfs != null" >
+        #{fsWebhdfs,jdbcType=VARCHAR},
+      </if>
+      <if test="fsUser != null" >
+        #{fsUser,jdbcType=VARCHAR},
+      </if>
+      <if test="fsDir != null" >
+        #{fsDir,jdbcType=VARCHAR},
+      </if>
+      <if test="streamingBlackNodeList != null" >
+        #{streamingBlackNodeList,jdbcType=VARCHAR},
+      </if>
+      <if test="batchBlackNodeList != null" >
+        #{batchBlackNodeList,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jw.bigwhalemonitor.entity.ClusterExample" resultType="java.lang.Integer" >
+    select count(*) from cluster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cluster
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yarnUrl != null" >
+        yarn_url = #{record.yarnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultFileCluster != null" >
+        default_file_cluster = #{record.defaultFileCluster,jdbcType=BIT},
+      </if>
+      <if test="record.flinkProxyUserEnabled != null" >
+        flink_proxy_user_enabled = #{record.flinkProxyUserEnabled,jdbcType=BIT},
+      </if>
+      <if test="record.fsDefaultFs != null" >
+        fs_default_fs = #{record.fsDefaultFs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fsWebhdfs != null" >
+        fs_webhdfs = #{record.fsWebhdfs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fsUser != null" >
+        fs_user = #{record.fsUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fsDir != null" >
+        fs_dir = #{record.fsDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.streamingBlackNodeList != null" >
+        streaming_black_node_list = #{record.streamingBlackNodeList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchBlackNodeList != null" >
+        batch_black_node_list = #{record.batchBlackNodeList,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cluster
+    set id = #{record.id,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      yarn_url = #{record.yarnUrl,jdbcType=VARCHAR},
+      default_file_cluster = #{record.defaultFileCluster,jdbcType=BIT},
+      flink_proxy_user_enabled = #{record.flinkProxyUserEnabled,jdbcType=BIT},
+      fs_default_fs = #{record.fsDefaultFs,jdbcType=VARCHAR},
+      fs_webhdfs = #{record.fsWebhdfs,jdbcType=VARCHAR},
+      fs_user = #{record.fsUser,jdbcType=VARCHAR},
+      fs_dir = #{record.fsDir,jdbcType=VARCHAR},
+      streaming_black_node_list = #{record.streamingBlackNodeList,jdbcType=VARCHAR},
+      batch_black_node_list = #{record.batchBlackNodeList,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jw.bigwhalemonitor.entity.Cluster" >
+    update cluster
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="yarnUrl != null" >
+        yarn_url = #{yarnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFileCluster != null" >
+        default_file_cluster = #{defaultFileCluster,jdbcType=BIT},
+      </if>
+      <if test="flinkProxyUserEnabled != null" >
+        flink_proxy_user_enabled = #{flinkProxyUserEnabled,jdbcType=BIT},
+      </if>
+      <if test="fsDefaultFs != null" >
+        fs_default_fs = #{fsDefaultFs,jdbcType=VARCHAR},
+      </if>
+      <if test="fsWebhdfs != null" >
+        fs_webhdfs = #{fsWebhdfs,jdbcType=VARCHAR},
+      </if>
+      <if test="fsUser != null" >
+        fs_user = #{fsUser,jdbcType=VARCHAR},
+      </if>
+      <if test="fsDir != null" >
+        fs_dir = #{fsDir,jdbcType=VARCHAR},
+      </if>
+      <if test="streamingBlackNodeList != null" >
+        streaming_black_node_list = #{streamingBlackNodeList,jdbcType=VARCHAR},
+      </if>
+      <if test="batchBlackNodeList != null" >
+        batch_black_node_list = #{batchBlackNodeList,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jw.bigwhalemonitor.entity.Cluster" >
+    update cluster
+    set name = #{name,jdbcType=VARCHAR},
+      yarn_url = #{yarnUrl,jdbcType=VARCHAR},
+      default_file_cluster = #{defaultFileCluster,jdbcType=BIT},
+      flink_proxy_user_enabled = #{flinkProxyUserEnabled,jdbcType=BIT},
+      fs_default_fs = #{fsDefaultFs,jdbcType=VARCHAR},
+      fs_webhdfs = #{fsWebhdfs,jdbcType=VARCHAR},
+      fs_user = #{fsUser,jdbcType=VARCHAR},
+      fs_dir = #{fsDir,jdbcType=VARCHAR},
+      streaming_black_node_list = #{streamingBlackNodeList,jdbcType=VARCHAR},
+      batch_black_node_list = #{batchBlackNodeList,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
