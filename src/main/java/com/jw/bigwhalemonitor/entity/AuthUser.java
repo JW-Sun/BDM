@@ -1,6 +1,7 @@
 package com.jw.bigwhalemonitor.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class AuthUser {
     private String id;
@@ -22,6 +23,17 @@ public class AuthUser {
     private Date createTime;
 
     private Date updateTime;
+
+    // 一个user可能会有多个role角色
+    private List<String> roles;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 
     public String getId() {
         return id;

@@ -3,8 +3,11 @@ package com.jw.bigwhalemonitor.mapper;
 import com.jw.bigwhalemonitor.entity.AuthRoleResource;
 import com.jw.bigwhalemonitor.entity.AuthRoleResourceExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface AuthRoleResourceMapper {
     int countByExample(AuthRoleResourceExample example);
 

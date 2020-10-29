@@ -1,11 +1,23 @@
 package com.jw.bigwhalemonitor.entity;
 
+import java.util.List;
+
 public class AuthRole {
     private String id;
 
     private String code;
 
     private String name;
+
+    private List<String> resources;
+
+    public List<String> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<String> resources) {
+        this.resources = resources;
+    }
 
     public String getId() {
         return id;

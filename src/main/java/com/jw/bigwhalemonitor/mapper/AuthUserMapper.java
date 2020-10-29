@@ -3,8 +3,12 @@ package com.jw.bigwhalemonitor.mapper;
 import com.jw.bigwhalemonitor.entity.AuthUser;
 import com.jw.bigwhalemonitor.entity.AuthUserExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Mapper
 public interface AuthUserMapper {
     int countByExample(AuthUserExample example);
 
