@@ -71,7 +71,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void deleteById(String id) {
+        AuthRole authRole = roleMapper.selectByPrimaryKey(id);
         roleMapper.deleteByPrimaryKey(id);
-        roleResourceMapper.deleteByPrimaryKey(id);
+        AuthRoleResourceExample example = new AuthRoleResourceExample();
+        AuthRoleResourceExample.Criteria criteria = example.createCriteria();
+        criteria.andRoleEqualTo(authRole.getCode());
+        roleResourceMapper.deleteByExample(example);
     }
 }

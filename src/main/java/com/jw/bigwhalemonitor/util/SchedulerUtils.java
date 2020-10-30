@@ -191,6 +191,48 @@ public class SchedulerUtils {
 
 }
 
+class Solution {
+    // 四层遍历 f(i, j, u) u是子串的长度 代表的是 s1 (i, i + u - 1)子串 与 s2 (j, j + u - 1)子串是否是扰乱字符串
+    public boolean isScramble(String s1, String s2) {
+        if (s1 == null || s2 == null) {
+            return true;
+        }
+        int len1 = s1.length();
+        int len2 = s2.length();
+        if (len1 != len2) {
+            return false;
+        }
+        char[] c1 = s1.toCharArray();
+        char[] c2 = s2.toCharArray();
+        boolean[][][] f = new boolean[len1][len1][len1 + 1];
+        for (int i = 0; i < len1; i++) {
+            for (int j = 0; j < len2; j++) {
+                if (c1[i] == c2[j]) {
+                    f[i][j][1] = true;
+                }
+            }
+        }
+        // 先遍历每一个区间的长度
+        for (int ll = 2; ll <= len1; ll++) {
+            // 然后遍历两个字符串中的每一位进行考虑
+            for (int i = 0; i + ll - 1 < len1; i++) {
+                for (int j = 0; j + ll - 1 < len2; j++) {
+                    // 然后枚举可以分割的长度
+                    for (int u = 1; u < ll; u++) {
+                        // 1. 都在左边
+                        boolean b1 = f[i][j][u] && f[i + u][j + u][ll - u];
+                        // 2. 分割长度一左一右 012
+                        boolean b2 = f[i][j + ll - u][u] && f[i + u][j][ll - u];
+                        f[i][j][ll] = b1 || b2;
+                    }
+                }
+            }
+        }
+
+        return f[0][0][len1];
+    }
+}
+
 /**
  * @author Suxy
  * @date 2019/8/30
