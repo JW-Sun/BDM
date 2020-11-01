@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -54,6 +55,14 @@ public class WebHdfsUtils {
 
     private WebHdfsUtils() {
 
+    }
+
+    public static void main(String[] args) throws IOException {
+        String url = "http://123.56.162.8:50070/webhdfs/v1/data/bdm?user.name=root&op=LISTSTATUS";
+        Request.Builder builder = new Request.Builder();
+        Request build = builder.url(url).build();
+        Response execute = OK_HTTP_CLIENT.newCall(build).execute();
+        System.out.println(execute.code());
     }
 
     public static boolean mkdir(String webhdfsUrls, String path, String username, String owner) {

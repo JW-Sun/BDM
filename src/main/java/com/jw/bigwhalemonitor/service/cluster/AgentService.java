@@ -8,4 +8,5 @@ public interface AgentService {
 
     public List<Agent> getAll();
 
+    List<Agent> getByClusterId(String id);
 }

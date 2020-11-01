@@ -14,4 +14,6 @@ public interface ScriptService {
      */
     public List<Script> getFuzzyScriptList(DtoScript dtoScript);
 
+    List<Script> getByClusterId(String id);
+
 }

@@ -3,8 +3,11 @@ package com.jw.bigwhalemonitor.mapper;
 import com.jw.bigwhalemonitor.entity.ClusterUser;
 import com.jw.bigwhalemonitor.entity.ClusterUserExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ClusterUserMapper {
     int countByExample(ClusterUserExample example);
 
