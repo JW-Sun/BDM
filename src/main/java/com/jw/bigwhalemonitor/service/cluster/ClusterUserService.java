@@ -13,4 +13,8 @@ public interface ClusterUserService {
     List<ClusterUser> getUidAndClusterId(String uid, String clusterId);
 
     void saveAll(List<ClusterUser> clusterUsers);
+
+    ClusterUser getById(String id);
+
+    void deteleById(String id);
 }

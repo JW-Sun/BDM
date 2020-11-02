@@ -31,4 +31,23 @@ public class ScriptServiceImpl implements ScriptService {
         return scripts;
     }
 
+    @Override
+    public List<Script> getByUidAndClusterId(String uid, String clusterId) {
+        ScriptExample example = new ScriptExample();
+        ScriptExample.Criteria criteria = example.createCriteria();
+        criteria.andClusterIdEqualTo(clusterId);
+        criteria.andUidEqualTo(uid);
+        List<Script> scripts = scriptMapper.selectByExample(example);
+        return scripts;
+    }
+
+    @Override
+    public List<Script> getByAgentId(String id) {
+        ScriptExample example = new ScriptExample();
+        ScriptExample.Criteria criteria = example.createCriteria();
+        criteria.andAgentIdEqualTo(id);
+        List<Script> scripts = scriptMapper.selectByExample(example);
+        return scripts;
+    }
+
 }

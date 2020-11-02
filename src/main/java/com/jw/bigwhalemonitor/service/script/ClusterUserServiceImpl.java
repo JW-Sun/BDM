@@ -64,4 +64,16 @@ public class ClusterUserServiceImpl implements ClusterUserService {
             }
         }
     }
+
+    @Override
+    public ClusterUser getById(String id) {
+        ClusterUser clusterUser = clusterUserMapper.selectByPrimaryKey(id);
+        return clusterUser;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deteleById(String id) {
+        clusterUserMapper.deleteByPrimaryKey(id);
+    }
 }

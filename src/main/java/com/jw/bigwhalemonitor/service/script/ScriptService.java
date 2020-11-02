@@ -1,6 +1,7 @@
 package com.jw.bigwhalemonitor.service.script;
 
 import com.jw.bigwhalemonitor.dto.DtoScript;
+import com.jw.bigwhalemonitor.entity.Agent;
 import com.jw.bigwhalemonitor.entity.Script;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface ScriptService {
 
     List<Script> getByClusterId(String id);
 
+    List<Script> getByUidAndClusterId(String uid, String clusterId);
+
+    List<Script> getByAgentId(String id);
 }
