@@ -3,8 +3,11 @@ package com.jw.bigwhalemonitor.mapper;
 import com.jw.bigwhalemonitor.entity.ComputeFramework;
 import com.jw.bigwhalemonitor.entity.ComputeFrameworkExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ComputeFrameworkMapper {
     int countByExample(ComputeFrameworkExample example);
 
