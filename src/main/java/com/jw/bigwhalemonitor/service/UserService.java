@@ -14,4 +14,5 @@ public interface UserService {
 
     void delete(AuthUser user);
 
+    AuthUser getById(String uid);
 }

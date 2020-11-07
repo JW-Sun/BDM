@@ -20,4 +20,18 @@ public interface ScriptService {
     List<Script> getByUidAndClusterId(String uid, String clusterId);
 
     List<Script> getByAgentId(String id);
+
+    List<Script> getByUid(String id);
+
+    List<Script> getAll();
+
+    List<Script> getByName(String name);
+
+    Script getById(String id);
+
+    String getJarsPath(String script);
+
+    void deleteJar(Script scriptById);
+
+    void save(Script script);
 }

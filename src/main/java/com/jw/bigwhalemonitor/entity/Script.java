@@ -1,5 +1,7 @@
 package com.jw.bigwhalemonitor.entity;
 
+import com.jw.bigwhalemonitor.common.Constant;
+
 import java.util.Date;
 
 public class Script {
@@ -34,6 +36,12 @@ public class Script {
     private String app;
 
     private String script;
+
+    public boolean isOffline() {
+        return type == Constant.SCRIPT_TYPE_SHELL_BATCH ||
+                type == Constant.SCRIPT_TYPE_SPARK_BATCH ||
+                type == Constant.SCRIPT_TYPE_FLINK_BATCH;
+    }
 
     public String getId() {
         return id;

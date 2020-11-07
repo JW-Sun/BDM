@@ -3,8 +3,12 @@ package com.jw.bigwhalemonitor.mapper;
 import com.jw.bigwhalemonitor.entity.Scheduling;
 import com.jw.bigwhalemonitor.entity.SchedulingExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
+
+@Mapper
 public interface SchedulingMapper {
     int countByExample(SchedulingExample example);
 

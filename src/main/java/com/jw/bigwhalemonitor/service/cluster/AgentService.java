@@ -23,4 +23,6 @@ public interface AgentService {
     void deleteById(String id);
 
     PageInfo<Agent> getAll(DtoAgent dtoAgent);
+
+    String getInstanceByClusterId(String clusterId, boolean b);
 }

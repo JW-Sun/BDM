@@ -79,5 +79,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public AuthUser getById(String uid) {
+        return authUserMapper.selectByPrimaryKey(uid);
+    }
+
 
 }
