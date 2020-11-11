@@ -19,4 +19,5 @@ public interface ClusterService {
 
     void delete(String id);
 
+    Cluster getDefaultCluster();
 }

@@ -87,5 +87,16 @@ public class ClusterServiceImpl implements ClusterService {
         clusterMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public Cluster getDefaultCluster() {
+        List<Cluster> all = getAll();
+        for (Cluster cluster : all) {
+            if (cluster.getDefaultFileCluster()) {
+                return cluster;
+            }
+        }
+        return null;
+    }
+
 
 }
