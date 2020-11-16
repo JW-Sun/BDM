@@ -1,6 +1,17 @@
 package com.jw.bigwhalemonitor.entity;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.jw.bigwhalemonitor.common.Constant;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Scheduling {
     private String id;
@@ -48,6 +59,63 @@ public class Scheduling {
     private Boolean enabled;
 
     private String topology;
+
+    public String generateCron() {
+        if (StringUtils.isNotBlank(cron)) {
+            return cron;
+        } else {
+            String cron = null;
+            if (cycle == Constant.TIMER_CYCLE_MINUTE) {
+                cron = "0 */" + intervals + " * * * ? *";
+            } else if (cycle == Constant.TIMER_CYCLE_HOUR) {
+                cron = "0 " + minute + " * * * ? *";
+            } else if (cycle == Constant.TIMER_CYCLE_DAY) {
+                cron = "0 " + minute + " " + hour + " * * ? *";
+            } else if (cycle == Constant.TIMER_CYCLE_WEEK) {
+                cron = "0 " + minute + " " + hour + " ? * " + week + " *";
+            }
+            if (cron == null) {
+                throw new IllegalArgumentException("cron expression is incorrect");
+            }
+            return cron;
+        }
+    }
+
+    public Map<String, String> analyzeNextNode(String currentNodeId) {
+        Map<String, String> nodeIdToScriptId = new HashMap<>();
+        if (type == Constant.SCHEDULING_TYPE_STREAMING) {
+            if (currentNodeId == null) {
+                nodeIdToScriptId.put(scriptIds, scriptIds);
+            }
+            return nodeIdToScriptId;
+        }
+        JSONObject jsonObject = JSON.parseObject(topology);
+        JSONArray nodes = jsonObject.getJSONArray("nodes");
+        JSONArray lines = jsonObject.getJSONArray("lines");
+        nodes.forEach(node -> nodeIdToScriptId.put(((JSONObject)node).getString("id"), ((JSONObject)node).getString("data")));
+        List<String> toIds = new ArrayList<>();
+        lines.forEach(line -> toIds.add(((JSONObject)line).getJSONObject("to").getString("id")));
+        String rootNodeId = null;
+        for (String id : nodeIdToScriptId.keySet()) {
+            if (!toIds.contains(id)) {
+                rootNodeId = id;
+                break;
+            }
+        }
+        if (currentNodeId == null) {
+            return Collections.singletonMap(rootNodeId, nodeIdToScriptId.get(rootNodeId));
+        } else {
+            nodeIdToScriptId.remove(rootNodeId);
+            for (int i = 0; i < lines.size(); i ++) {
+                JSONObject line = lines.getJSONObject(i);
+                String fromId = line.getJSONObject("from").getString("id");
+                if (!fromId.equals(currentNodeId)) {
+                    nodeIdToScriptId.remove(line.getJSONObject("to").getString("id"));
+                }
+            }
+            return nodeIdToScriptId;
+        }
+    }
 
     public String getId() {
         return id;

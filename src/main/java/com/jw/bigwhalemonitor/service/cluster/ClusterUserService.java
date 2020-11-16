@@ -17,4 +17,6 @@ public interface ClusterUserService {
     ClusterUser getById(String id);
 
     void deteleById(String id);
+
+    List<ClusterUser> getByClusterIdAndQueue(String queue, String clusterId);
 }

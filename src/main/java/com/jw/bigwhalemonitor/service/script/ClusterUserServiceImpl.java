@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jw.bigwhalemonitor.dto.DtoClusterUser;
 import com.jw.bigwhalemonitor.entity.Cluster;
+import com.jw.bigwhalemonitor.entity.ClusterExample;
 import com.jw.bigwhalemonitor.entity.ClusterUser;
 import com.jw.bigwhalemonitor.entity.ClusterUserExample;
 import com.jw.bigwhalemonitor.mapper.ClusterUserMapper;
@@ -75,5 +76,15 @@ public class ClusterUserServiceImpl implements ClusterUserService {
     @Override
     public void deteleById(String id) {
         clusterUserMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<ClusterUser> getByClusterIdAndQueue(String queue, String clusterId) {
+        ClusterUserExample example = new ClusterUserExample();
+        ClusterUserExample.Criteria criteria = example.createCriteria();
+        criteria.andQueueEqualTo(queue);
+        criteria.andClusterIdEqualTo(clusterId);
+        List<ClusterUser> clusterUsers = clusterUserMapper.selectByExample(example);
+        return clusterUsers;
     }
 }

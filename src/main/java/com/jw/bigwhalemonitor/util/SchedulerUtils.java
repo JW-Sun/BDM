@@ -9,6 +9,8 @@ import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -138,7 +140,7 @@ public class SchedulerUtils {
         schedulerSimpleJob(jobClass, simpleName, group, intervalMillisecond, repeatCount, null);
     }
 
-    public  static void schedulerSimpleJob(Class<? extends Job> jobClass, String simpleName, String group, long intervalMillisecond, int repeatCount, JobDataMap jobDataMap) throws SchedulerException {
+    public static void schedulerSimpleJob(Class<? extends Job> jobClass, String simpleName, String group, long intervalMillisecond, int repeatCount, JobDataMap jobDataMap) throws SchedulerException {
         schedulerSimpleJob(jobClass, simpleName, group, intervalMillisecond, repeatCount, jobDataMap, null, null);
     }
 
