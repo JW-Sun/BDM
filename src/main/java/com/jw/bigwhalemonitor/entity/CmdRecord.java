@@ -1,8 +1,11 @@
 package com.jw.bigwhalemonitor.entity;
 
+import lombok.Builder;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class CmdRecord {
+public class CmdRecord implements Serializable {
     private String id;
 
     private String parentId;
@@ -38,6 +41,19 @@ public class CmdRecord {
     private String jobFinalStatus;
 
     private String url;
+
+    private String args;
+
+    public CmdRecord() {
+    }
+
+    public String getArgs() {
+        return args;
+    }
+
+    public void setArgs(String args) {
+        this.args = args;
+    }
 
     public String getId() {
         return id;

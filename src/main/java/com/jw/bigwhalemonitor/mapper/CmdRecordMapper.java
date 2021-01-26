@@ -4,8 +4,11 @@ import com.jw.bigwhalemonitor.entity.CmdRecord;
 import com.jw.bigwhalemonitor.entity.CmdRecordExample;
 import com.jw.bigwhalemonitor.entity.CmdRecordWithBLOBs;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface CmdRecordMapper {
     int countByExample(CmdRecordExample example);
 

@@ -1,5 +1,6 @@
 package com.jw.bigwhalemonitor.service.impl.script;
 
+import com.jw.bigwhalemonitor.common.Constant;
 import com.jw.bigwhalemonitor.dto.DtoScript;
 import com.jw.bigwhalemonitor.entity.AuthUser;
 import com.jw.bigwhalemonitor.entity.Cluster;
@@ -11,10 +12,13 @@ import com.jw.bigwhalemonitor.service.cluster.ClusterService;
 import com.jw.bigwhalemonitor.service.script.ScriptService;
 import com.jw.bigwhalemonitor.util.WebHdfsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -167,6 +171,26 @@ public class ScriptServiceImpl implements ScriptService {
         } else {
             scriptMapper.updateByPrimaryKey(script);
         }
+    }
+
+    @Override
+    public Map<String, Script> getAppMap(String clusterId) {
+        Map<String, Script> map = new HashMap<>();
+        List<Script> byClusterId = getByClusterId(clusterId);
+        if (byClusterId != null && byClusterId.size() > 0) {
+            for (Script script : byClusterId) {
+                if (script.getType() == Constant.SCRIPT_TYPE_SHELL_BATCH) {
+                    continue;
+                }
+                String user = script.getUser();
+                String queue = script.getQueue();
+                if (queue != null && !"root".equals(queue) && !queue.startsWith("root.")) {
+                    queue = "root." + queue;
+                }
+                map.put(user + "$" + queue + "$" + script.getApp(), script);
+            }
+        }
+        return map;
     }
 
     private List<Script> getByUidWithNotId(String id, String uid) {

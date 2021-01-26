@@ -25,4 +25,6 @@ public interface AgentService {
     PageInfo<Agent> getAll(DtoAgent dtoAgent);
 
     String getInstanceByClusterId(String clusterId, boolean b);
+
+    String getInstanceByAgentId(String agentId, boolean b);
 }

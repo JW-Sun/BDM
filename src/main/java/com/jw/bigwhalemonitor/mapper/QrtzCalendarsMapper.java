@@ -4,8 +4,11 @@ import com.jw.bigwhalemonitor.entity.QrtzCalendars;
 import com.jw.bigwhalemonitor.entity.QrtzCalendarsExample;
 import com.jw.bigwhalemonitor.entity.QrtzCalendarsKey;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface QrtzCalendarsMapper {
     int countByExample(QrtzCalendarsExample example);
 

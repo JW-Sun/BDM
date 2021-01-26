@@ -5,6 +5,7 @@ import com.jw.bigwhalemonitor.entity.Agent;
 import com.jw.bigwhalemonitor.entity.Script;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ScriptService {
 
@@ -34,4 +35,6 @@ public interface ScriptService {
     void deleteJar(Script scriptById);
 
     void save(Script script);
+
+	Map<String, Script> getAppMap(String clusterId);
 }

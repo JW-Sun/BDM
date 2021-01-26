@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SchedulingServiceImpl implements SchedulingService {
@@ -76,7 +77,12 @@ public class SchedulingServiceImpl implements SchedulingService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Scheduling save(Scheduling scheduling) {
-        schedulingMapper.insert(scheduling);
+        if (scheduling.getId() == null) {
+           scheduling.setId(UUID.randomUUID().toString());
+           schedulingMapper.insert(scheduling);
+        } else {
+            schedulingMapper.updateByPrimaryKeyWithBLOBs(scheduling);
+        }
         return scheduling;
     }
 
@@ -84,5 +90,13 @@ public class SchedulingServiceImpl implements SchedulingService {
     @Override
     public void deleteById(String id) {
         schedulingMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Scheduling> getByEnable(boolean b) {
+        SchedulingExample example = new SchedulingExample();
+        SchedulingExample.Criteria criteria = example.createCriteria();
+        criteria.andEnabledEqualTo(b);
+        return schedulingMapper.selectByExampleWithBLOBs(example);
     }
 }

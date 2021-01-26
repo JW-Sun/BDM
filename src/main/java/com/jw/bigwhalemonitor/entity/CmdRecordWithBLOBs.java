@@ -1,13 +1,20 @@
 package com.jw.bigwhalemonitor.entity;
 
+
+import lombok.Data;
+
+
 public class CmdRecordWithBLOBs extends CmdRecord {
     private String content;
-
-    private String args;
 
     private String outputs;
 
     private String errors;
+
+    public CmdRecordWithBLOBs() {
+        super();
+    }
+
 
     public String getContent() {
         return content;
@@ -17,13 +24,6 @@ public class CmdRecordWithBLOBs extends CmdRecord {
         this.content = content == null ? null : content.trim();
     }
 
-    public String getArgs() {
-        return args;
-    }
-
-    public void setArgs(String args) {
-        this.args = args == null ? null : args.trim();
-    }
 
     public String getOutputs() {
         return outputs;

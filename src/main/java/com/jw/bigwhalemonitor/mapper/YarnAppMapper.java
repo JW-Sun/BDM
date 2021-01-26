@@ -3,8 +3,10 @@ package com.jw.bigwhalemonitor.mapper;
 import com.jw.bigwhalemonitor.entity.YarnApp;
 import com.jw.bigwhalemonitor.entity.YarnAppExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface YarnAppMapper {
     int countByExample(YarnAppExample example);
 

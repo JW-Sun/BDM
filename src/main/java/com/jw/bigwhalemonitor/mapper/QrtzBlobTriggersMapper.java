@@ -4,8 +4,10 @@ import com.jw.bigwhalemonitor.entity.QrtzBlobTriggers;
 import com.jw.bigwhalemonitor.entity.QrtzBlobTriggersExample;
 import com.jw.bigwhalemonitor.entity.QrtzBlobTriggersKey;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface QrtzBlobTriggersMapper {
     int countByExample(QrtzBlobTriggersExample example);
 

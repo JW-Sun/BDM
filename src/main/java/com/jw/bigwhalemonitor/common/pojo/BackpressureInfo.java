@@ -1,10 +1,5 @@
 package com.jw.bigwhalemonitor.common.pojo;
 
-/**
- * @author Suxy
- * @date 2019/11/7
- * @description file description
- */
 public class BackpressureInfo {
 
     /**

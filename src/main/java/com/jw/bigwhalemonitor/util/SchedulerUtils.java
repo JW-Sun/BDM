@@ -2,15 +2,13 @@ package com.jw.bigwhalemonitor.util;
 
 
 import com.jw.bigwhalemonitor.common.Constant;
-import netscape.security.UserTarget;
+
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -20,8 +18,6 @@ import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
-
-import javax.swing.*;
 import java.util.Date;
 
 public class SchedulerUtils {
@@ -92,7 +88,7 @@ public class SchedulerUtils {
     }
 
     // 带有开始时间和结束事件的调度
-    public static void scheduleCronJob(Class<? extends Job> jobClass, String simpleName, String group, String cronExpression, Date startDate, Date endDate, JobDataMap jobDataMap) throws SchedulerException {
+    public static void schedulerCronJob(Class<? extends Job> jobClass, String simpleName, String group, String cronExpression, Date startDate, Date endDate, JobDataMap jobDataMap) throws SchedulerException {
         JobKey jobKey = new JobKey(simpleName, group);
         if (!scheduler.checkExists(jobKey)) {
             JobBuilder jobBuilder = JobBuilder.newJob(jobClass);

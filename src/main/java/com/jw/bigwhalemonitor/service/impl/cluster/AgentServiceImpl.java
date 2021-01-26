@@ -128,7 +128,7 @@ public class AgentServiceImpl implements AgentService {
         throw new IllegalStateException("No agent instance accessible");
     }
 
-    private String getInstanceByAgentId(String id, boolean b) {
+    public String getInstanceByAgentId(String id, boolean b) {
         // 通过agentID进行查找
         Agent agent = getById(id);
         List<String> instances = new ArrayList<>();
